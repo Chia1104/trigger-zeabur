@@ -9,7 +9,7 @@
     "dev:nest": "nest start",
     "dev": "turbo run dev:nest",
     "prepare": "husky install",
-    "start": "node dist/src/main & pnpm dlx @trigger.dev/cli@latest dev --port ${PORT:-3003} --hostname 0.0.0.0",
+    "start": "node dist/src/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "vitest run",
     "test:watch": "vitest",
