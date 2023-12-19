@@ -2,7 +2,6 @@ import { Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { TriggerDevModule } from "@trigger.dev/nestjs";
 import { AppController } from "./app.controller";
-import { JobsController } from "./modules/jobs/jobs.controller";
 
 @Module({
   imports: [
@@ -20,6 +19,6 @@ import { JobsController } from "./modules/jobs/jobs.controller";
       }),
     }),
   ],
-  controllers: [AppController, JobsController],
+  controllers: [AppController],
 })
 export class AppModule {}
