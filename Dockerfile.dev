@@ -1,0 +1,44 @@
+ARG NODE_VERSION=20
+
+FROM node:${NODE_VERSION}-alpine AS base
+
+WORKDIR /app
+
+RUN apk update && \
+    apk add --no-cache \
+    libc6-compat && \
+    corepack enable
+
+FROM base AS installer
+
+COPY . .
+
+ARG TURBO_TEAM \
+    TURBO_TOKEN \
+    DATABASE_URL
+
+ENV TURBO_TEAM=$TURBO_TEAM \
+    TURBO_TOKEN=$TURBO_TOKEN \
+    DATABASE_URL=${DATABASE_URL}
+
+RUN pnpm i
+
+RUN pnpm build
+
+FROM base as prod
+
+COPY package.json pnpm-lock.yaml ./
+
+RUN pnpm i --prod --ignore-scripts
+
+FROM base as runner
+
+COPY --from=installer /app/dist ./dist
+COPY --from=prod /app/node_modules ./node_modules
+
+ENV NODE_ENV=production \
+    PORT=8080
+
+EXPOSE 8080
+
+CMD [ "node", "main.js" ]
