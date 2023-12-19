@@ -2,11 +2,13 @@ import { Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { TriggerDevModule } from "@trigger.dev/nestjs";
 import { AppController } from "./app.controller";
-import IssueLabelerModule from "./modules/issue-labeler/issue-labeler.module";
+import IssueLabelerController from "./modules/issue-labeler/issue-labeler.controller";
+import GithubModule from "./modules/github/github.module";
+import GithubProvider from "./modules/github/github.provider";
 
 @Module({
   imports: [
-    IssueLabelerModule,
+    GithubModule,
     ConfigModule.forRoot({
       isGlobal: true,
     }),
@@ -21,6 +23,7 @@ import IssueLabelerModule from "./modules/issue-labeler/issue-labeler.module";
       }),
     }),
   ],
-  controllers: [AppController],
+  providers: [GithubProvider],
+  controllers: [AppController, IssueLabelerController],
 })
 export class AppModule {}
