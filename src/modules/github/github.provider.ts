@@ -1,6 +1,5 @@
 import { type FactoryProvider } from "@nestjs/common";
 import { Github } from "@trigger.dev/github";
-import { ServiceUnavailableException } from "@nestjs/common";
 import { Inject } from "@nestjs/common";
 
 export const GITHUB_PROVIDER = "GITHUB_PROVIDER";
@@ -11,9 +10,7 @@ export default {
   provide: GITHUB_PROVIDER,
   useFactory: () => {
     if (!process.env.GITHUB_TOKEN) {
-      throw new ServiceUnavailableException(
-        "`GITHUB_TOKEN` environment variable not set"
-      );
+      throw new Error("GITHUB_TOKEN environment variable is not set");
     }
     return new Github({
       id: "github",
