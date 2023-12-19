@@ -26,6 +26,7 @@ class IssueLabelerService {
         await io.github.addIssueAssignees("add assignee", {
           owner: payload.repository.owner.login,
           repo: payload.repository.name,
+          // @ts-expect-error
           issueNumber: payload.issue.number,
           assignees: ["Chia1104"],
         });
@@ -33,6 +34,7 @@ class IssueLabelerService {
         await io.github.addIssueLabels("add label", {
           owner: payload.repository.owner.login,
           repo: payload.repository.name,
+          // @ts-expect-error
           issueNumber: payload.issue.number,
           labels: ["bug"],
         });
