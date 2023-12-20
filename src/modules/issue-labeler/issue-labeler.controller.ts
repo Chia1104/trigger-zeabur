@@ -1,21 +1,26 @@
 import { Controller, Get } from "@nestjs/common";
 import { InjectGithub } from "../github/github.provider";
-import { type Github, events } from "@trigger.dev/github";
+import { Github, events } from "@trigger.dev/github";
 import { InjectTriggerDevClient } from "@trigger.dev/nestjs";
 import { type TriggerClient } from "@trigger.dev/sdk";
 
 @Controller("/github/issue-labeler")
 class IssueLabelerController {
   constructor(
-    @InjectGithub() private readonly github: Github,
+    // @InjectGithub() private readonly github: Github,
     @InjectTriggerDevClient() private readonly client: TriggerClient
   ) {
+    const github = new Github({
+      id: "github",
+      token: process.env.GITHUB_TOKEN,
+    });
     this.client.defineJob({
       id: "github-integration-on-issue-opened",
       name: "GitHub Integration - On Issue Opened",
       version: "0.1.0",
-      integrations: { github: this.github },
-      trigger: this.github.triggers.repo({
+      enabled: true,
+      integrations: { github },
+      trigger: github.triggers.repo({
         event: events.onIssueOpened,
         owner: "Chia1104",
         repo: "trigger-zeabur",

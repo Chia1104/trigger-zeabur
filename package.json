@@ -6,7 +6,7 @@
     "build:nest": "nest build",
     "build": "turbo run build:nest",
     "format": "prettier --write \"**/*.{ts,js}\"",
-    "dev:nest": "nest start",
+    "dev:nest": "nest start --watch",
     "dev": "turbo run dev:nest",
     "prepare": "husky install",
     "start": "node dist/src/main",

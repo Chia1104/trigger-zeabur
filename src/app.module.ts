@@ -8,7 +8,7 @@ import GithubProvider from "./modules/github/github.provider";
 
 @Module({
   imports: [
-    GithubModule,
+    // GithubModule,
     ConfigModule.forRoot({
       isGlobal: true,
     }),
@@ -23,7 +23,7 @@ import GithubProvider from "./modules/github/github.provider";
       }),
     }),
   ],
-  providers: [GithubProvider],
+  providers: [],
   controllers: [AppController, IssueLabelerController],
 })
 export class AppModule {}
